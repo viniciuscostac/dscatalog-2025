@@ -1,16 +1,19 @@
 package com.devsuperior.dscatalog.services;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.devsuperior.dscatalog.dto.CategoryDTO;
 import com.devsuperior.dscatalog.entities.Category;
 import com.devsuperior.dscatalog.repositories.CategoryRepository;
 
-@Service //registra a classe como um componente que vai participar do sistema de injecao de dependencia automatizado do spring
+ //@Service registra a classe como um componente que vai participar do sistema de injecao de dependencia automatizado do spring
 //significa que quem vai gerenciar as instancias das dependencias dos objetos tipo category service, será o spring
+@Service
 public class CategoryService {
 	
 	@Autowired //verificar o que faz
@@ -18,9 +21,15 @@ public class CategoryService {
 										  //definido abaixo, possa encontrar os dados.
 	
 	@Transactional(readOnly = true)
-	public List <Category> findAll(){
-		return repository.findAll();
+	public List <CategoryDTO> findAll(){
+		List<Category> list = repository.findAll();
+		
+		//assistir aula sobre map, sort e reduce -- entender stream
+		List<CategoryDTO>listDto = list.stream().map(x -> new CategoryDTO(x)).collect(Collectors.toList());
+		
+		return listDto;
 		
 	}
-
+	
+ 
 }
