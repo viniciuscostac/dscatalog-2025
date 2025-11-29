@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.devsuperior.dscatalog.entities.Category;
 import com.devsuperior.dscatalog.repositories.CategoryRepository;
@@ -16,6 +17,7 @@ public class CategoryService {
 	private CategoryRepository repository; //serve para conectar a classe onde estao os itens do banco de dados para que o List
 										  //definido abaixo, possa encontrar os dados.
 	
+	@Transactional(readOnly = true)
 	public List <Category> findAll(){
 		return repository.findAll();
 		
